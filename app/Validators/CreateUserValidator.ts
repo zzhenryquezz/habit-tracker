@@ -9,5 +9,7 @@ export default class CreateUserValidator {
     password: schema.string({}, [rules.confirmed()]),
   })
 
-  public messages = {}
+  public messages = {
+    'email.unique': 'Email already in registered',
+  }
 }
