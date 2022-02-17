@@ -5,6 +5,9 @@ export default class HabitSequence extends BaseModel {
   @column({ isPrimary: true })
   public id: number
 
+  @column()
+  public habitId: number
+
   @column.date()
   public date: DateTime
 
