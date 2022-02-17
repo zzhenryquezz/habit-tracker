@@ -35,19 +35,7 @@ export default class AuthController {
     }
   }
 
-  public async resetPassword({ request, auth }: HttpContextContract) {
-    const { password } = await request.validate({
-      schema: schema.create({
-        password: schema.string({}, [rules.confirmed()]),
-      }),
-    })
-
-    auth.user.merge({ password })
-
-    await auth.user.save()
-
-    return {
-      message: 'Successfully reset password',
-    }
+  public async whoIAm({ auth }: HttpContextContract) {
+    return auth.user
   }
 }

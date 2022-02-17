@@ -9,9 +9,15 @@ export default class UsersController {
     return users
   }
 
-  public async update({ params, request }: HttpContextContract) {
+  public async update({ params, request, bouncer, auth }: HttpContextContract) {
     const user = await User.findOrFail(params.id)
     const data = await request.validate(UpdateUserValidator)
+
+    await bouncer.with('UserPolicy').authorize('update', user)
+
+    if (!auth.user?.isAdmin) {
+      delete data.is_admin
+    }
 
     user.merge(data)
 
