@@ -3,9 +3,23 @@ import { join } from 'path'
 import getPort from 'get-port'
 import { configure } from 'japa'
 import sourceMapSupport from 'source-map-support'
+import execa from 'execa'
 
 process.env.NODE_ENV = 'testing'
 process.env.ADONIS_ACE_CWD = join(__dirname)
+
+async function runMigrations() {
+  await execa.node('ace', ['migration:run'], {
+    stdio: 'inherit',
+  })
+}
+
+async function rollbackMigrations() {
+  await execa.node('ace', ['migration:rollback', '--batch=0'], {
+    stdio: 'inherit',
+  })
+}
+
 sourceMapSupport.install({ handleUncaughtExceptions: false })
 
 async function startHttpServer() {
@@ -19,5 +33,6 @@ async function startHttpServer() {
  */
 configure({
   files: ['test/**/*.spec.ts'],
-  before: [startHttpServer],
+  before: [runMigrations, startHttpServer],
+  after: [rollbackMigrations],
 })
