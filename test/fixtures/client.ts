@@ -9,7 +9,8 @@ export function createClient() {
   const client = {
     ...supertest(BASE_URL),
     isAuthenticated: () => !!token,
-    login: async () => Promise.resolve(),
+    generateToken: async (user?: Pick<User, 'email' | 'password'>) => Promise.resolve(''),
+    login: async (user?: Pick<User, 'email' | 'password'>) => Promise.resolve(),
     logout: async () => Promise.resolve(),
   }
 
@@ -35,26 +36,26 @@ export function createClient() {
     token = undefined
   }
 
-  client.login = async (isAdmin = true) => {
-    await User.updateOrCreate(
-      { email: 'admin-test@teste.com' },
-      {
-        name: 'Admin Test',
-        email: 'admin-test@teste.com',
-        password: 'ys-123',
-        isAdmin,
-      }
-    )
+  client.generateToken = async (user?: Pick<User, 'email' | 'password'>) => {
+    const { body } = await client.post('/api/auth/login').send(user).expect(200)
 
-    const { body } = await client
-      .post('/api/auth/login')
-      .send({
-        email: 'admin-test@teste.com',
-        password: 'ys-123',
-      })
-      .expect(200)
+    return body.token
+  }
 
-    token = body.token
+  client.login = async (user?: Pick<User, 'email' | 'password'>) => {
+    if (!user) {
+      await User.updateOrCreate(
+        { email: 'admin-test@teste.com' },
+        {
+          name: 'Admin Test',
+          email: 'admin-test@teste.com',
+          password: 'ys-123',
+          isAdmin: true,
+        }
+      )
+    }
+
+    token = await client.generateToken(user)
   }
 
   return client
