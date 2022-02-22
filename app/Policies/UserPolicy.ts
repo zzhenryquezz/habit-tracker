@@ -8,7 +8,7 @@ export default class UserPolicy extends BasePolicy {
     }
   }
 
-  public update(currentUser: User, model: User) {
-    return currentUser.id === model.id
+  public isOwner(user: User, owner: User) {
+    return user.id === owner.id
   }
 }

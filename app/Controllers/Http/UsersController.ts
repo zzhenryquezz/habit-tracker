@@ -1,19 +1,25 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
+import { schema, rules } from '@ioc:Adonis/Core/Validator'
 import User from 'App/Models/User'
 import UpdateUserValidator from 'App/Validators/UpdateUserValidator'
 
 export default class UsersController {
-  public async index({}: HttpContextContract) {
-    const users = await User.all()
+  public async index({ request }: HttpContextContract) {
+    const filters = await request.validate({
+      schema: schema.create({
+        page: schema.number.optional(),
+        limit: schema.number.optional([rules.range(1, 100)]),
+      }),
+    })
 
-    return users
+    return User.query().paginate(filters.page || 1, filters.limit)
   }
 
   public async update({ params, request, bouncer, auth }: HttpContextContract) {
     const user = await User.findOrFail(params.id)
     const data = await request.validate(UpdateUserValidator)
 
-    await bouncer.with('UserPolicy').authorize('update', user)
+    await bouncer.with('UserPolicy').authorize('isOwner', user)
 
     if (!auth.user?.isAdmin) {
       delete data.is_admin
@@ -28,8 +34,10 @@ export default class UsersController {
     }
   }
 
-  public async destroy({ params }: HttpContextContract) {
+  public async destroy({ params, bouncer }: HttpContextContract) {
     const user = await User.findOrFail(params.id)
+
+    await bouncer.with('UserPolicy').authorize('isOwner', user)
 
     await user.delete()
 
