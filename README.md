@@ -2,7 +2,7 @@
 
 # Habit tracker
 
-This app was made to show my skills as a web-developer, it's a a multi-tenant habit tracker.
+This app was made to show my skills as a web developer, it's a multi-tenant habit tracker.
 
 builded with: [adonis-v5](https://adonisjs.com/) - [PostgresSQL](https://www.postgresql.org/) - [Swagger-ui](https://swagger.io/).
 
