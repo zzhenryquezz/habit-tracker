@@ -1,6 +1,6 @@
 import { BaseCommand } from '@adonisjs/core/build/standalone'
 
-import CreateUserValidator from 'App/Validators/CreateUserValidator'
+import UserStoreValidator from 'App/Validators/UserStoreValidator'
 
 export default class CreateUser extends BaseCommand {
   public static commandName = 'create:user'
@@ -23,7 +23,7 @@ export default class CreateUser extends BaseCommand {
 
     await validator
       .validate({
-        ...new CreateUserValidator(),
+        ...new UserStoreValidator(),
         data: { name, email, password, password_confirmation: passwordConfirmation },
       })
       .then(async (user) => {

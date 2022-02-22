@@ -1,6 +1,6 @@
 import { schema, rules } from '@ioc:Adonis/Core/Validator'
 
-export default class CreateUserValidator {
+export default class UserStoreValidator {
   constructor() {}
 
   public schema = schema.create({
