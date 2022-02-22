@@ -5,14 +5,18 @@ const BASE_URL = `http://${process.env.HOST}:${process.env.PORT}`
 
 let token: string | undefined
 
+interface MyClient extends supertest.SuperTest<supertest.Test> {
+  isAuthenticated: () => boolean
+  generateToken: (user?: Partial<User>) => Promise<string>
+  login: (user?: Partial<User>) => Promise<void>
+  logout: () => Promise<void>
+}
+
 export function createClient() {
   const client = {
     ...supertest(BASE_URL),
     isAuthenticated: () => !!token,
-    generateToken: async (user?: Pick<User, 'email' | 'password'>) => Promise.resolve(''),
-    login: async (user?: Pick<User, 'email' | 'password'>) => Promise.resolve(),
-    logout: async () => Promise.resolve(),
-  }
+  } as MyClient
 
   const methods = ['get', 'post', 'patch', 'put', 'delete']
 
@@ -42,20 +46,18 @@ export function createClient() {
     return body.token
   }
 
-  client.login = async (user?: Pick<User, 'email' | 'password'>) => {
-    if (!user) {
-      await User.updateOrCreate(
-        { email: 'admin-test@teste.com' },
-        {
-          name: 'Admin Test',
-          email: 'admin-test@teste.com',
-          password: 'ys-123',
-          isAdmin: true,
-        }
-      )
+  client.login = async (data?: Partial<User>) => {
+    const payload = {
+      name: 'user-test',
+      email: 'test@teste.com',
+      password: '123456',
+      isAdmin: true,
+      ...data,
     }
 
-    token = await client.generateToken(user)
+    await User.updateOrCreate({ email: payload.email }, payload)
+
+    token = await client.generateToken(payload)
   }
 
   return client
