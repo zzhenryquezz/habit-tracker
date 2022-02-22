@@ -3,19 +3,90 @@
     tags:
       - Auth
     security: []
-    description: Login
-    parameters:
-      - name: credentials
-        in: body
-        required: true
-        schema:
-          properties:
-            teste:
-              type: string
-              example: '1234567890'
-              required: true
+    description: Make login and get a api token
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              email:
+                type: string
+                example: 'teste@teste.com'
+                required: true
+              password:
+                type: string
+                example: '123456'
+                required: true
+
     produces:
       - application/json
+
+    responses:
+      200:
+        description: Success
+
+/api/auth/logout:
+  post:
+    tags:
+      - Auth
+    security:
+      - bearerAuth: []
+    description: Logout
+    produces:
+      - application/json
+
+    responses:
+      200:
+        description: Success
+
+/api/auth/register:
+  post:
+    tags:
+      - Auth
+    security:
+      - bearerAuth: []
+    description: Register a new user in the app
+    produces:
+      - application/json
+
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              name:
+                type: string
+                example: 'Dio'
+                required: true
+              email:
+                type: string
+                example: 'teste@teste.com'
+                required: true
+              password:
+                type: string
+                example: '123456'
+                required: true
+              password_confirmation:
+                type: string
+                example: '123456'
+                required: true
+
+    responses:
+      200:
+        description: Success
+
+/api/auth/who-i-am:
+  get:
+    tags:
+      - Auth
+    security:
+      - bearerAuth: []
+    description: Show current logged user
+    produces:
+      - application/json
+
     responses:
       200:
         description: Success
