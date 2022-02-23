@@ -1,0 +1,94 @@
+/api/users:
+  get:
+    description: Return a list of users (admin only)
+    tags:
+      - User
+    security:
+      - bearerAuth: []
+    produces:
+      - application/json
+
+    parameters:
+      - in: query
+        name: page
+        schema:
+          type: integer
+
+      - in: query
+        name: limit
+        schema:
+          type: integer
+
+    responses:
+      200:
+        description: Success
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                meta:
+                  $ref: '#/components/schemas/PaginationMeta'
+                data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/User'
+
+/api/users/{id}:
+  patch:
+    description: Update a user
+    tags:
+      - User
+    security:
+      - bearerAuth: []
+    produces:
+      - application/json
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              name:
+                type: string
+                example: 'Dio'
+              email:
+                type: string
+                example: 'teste@teste.com'
+              is_admin:
+                type: boolean
+                example: 'teste@teste.com'
+              password:
+                type: string
+                example: '123456'
+              password_confirmation:
+                type: string
+                example: '123456'
+
+    responses:
+      200:
+        description: Success
+
+  delete:
+    description: Delete a user
+    tags:
+      - User
+    security:
+      - bearerAuth: []
+    produces:
+      - application/json
+    parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+
+    responses:
+      200:
+        description: Success
