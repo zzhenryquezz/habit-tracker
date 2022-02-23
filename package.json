@@ -11,7 +11,8 @@
     "eslint": "eslint . --ext=.ts --max-warnings=0",
     "prettier": "prettier --c .",
     "prepare": "husky install",
-    "dash:dev": "vite dashboard"
+    "dash:dev": "vite dashboard",
+    "dash:build": "vite build dashboard"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^5.4.1",
