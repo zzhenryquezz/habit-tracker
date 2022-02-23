@@ -8,7 +8,8 @@
     "build": "node ace build --production",
     "start": "node server.js",
     "lint": "eslint . --ext=.ts",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "prepare": "husky install"
   },
   "devDependencies": {
     "@adonisjs/assembler": "^5.4.1",
@@ -26,7 +27,8 @@
     "supertest": "^6.2.2",
     "typescript": "^4.5.5",
     "youch": "^3.1.0",
-    "youch-terminal": "^2.1.2"
+    "youch-terminal": "^2.1.2",
+    "husky": "^7.0.0"
   },
   "dependencies": {
     "@adonisjs/auth": "^8.0.10",
