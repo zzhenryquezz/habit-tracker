@@ -6,7 +6,7 @@ const swaggerConfig: SwaggerConfig = {
   specEnabled: true, //disable or enable swagger.json route
   specUrl: '/swagger.json',
 
-  middleware: [], // middlewares array, for protect your swagger docs and spec endpoints
+  middleware: [], // middleware array, for protect your swagger docs and spec endpoints
 
   options: {
     definition: {
