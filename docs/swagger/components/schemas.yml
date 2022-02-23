@@ -11,6 +11,17 @@ components:
           type: string
         is_admin:
           type: boolean
+    Habit:
+      type: object
+      properties:
+        id:
+          type: number
+        user_id:
+          type: number
+        name:
+          type: string
+        description:
+          type: string
 
     PaginationMeta:
       type: object

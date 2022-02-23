@@ -1,0 +1,173 @@
+/api/users/{user_id}/habits:
+  get:
+    description: Return a list of user habits
+    tags:
+      - Habit
+    security:
+      - bearerAuth: []
+    produces:
+      - application/json
+
+    parameters:
+      - in: path
+        name: user_id
+        required: true
+        schema:
+          type: integer
+
+      - in: query
+        name: page
+        schema:
+          type: integer
+
+      - in: query
+        name: limit
+        schema:
+          type: integer
+
+    responses:
+      200:
+        description: Success
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                meta:
+                  $ref: '#/components/schemas/PaginationMeta'
+                data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Habit'
+  post:
+    description: Create a new user habit
+    tags:
+      - Habit
+    security:
+      - bearerAuth: []
+    produces:
+      - application/json
+
+    parameters:
+      - in: path
+        name: user_id
+        required: true
+        schema:
+          type: integer
+
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              name:
+                type: string
+                example: 'Meditation'
+              description:
+                type: string
+                example: 'Meditate for 10 minutes'
+
+    responses:
+      200:
+        description: Success
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Habit'
+
+/api/users/{user_id}/habits/{id}:
+  get:
+    description: Return a user habit by id
+    tags:
+      - Habit
+    security:
+      - bearerAuth: []
+    produces:
+      - application/json
+
+    parameters:
+      - in: path
+        name: user_id
+        required: true
+        schema:
+          type: integer
+
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+
+    responses:
+      200:
+        description: Success
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Habit'
+
+  patch:
+    description: Update a user habit
+    tags:
+      - Habit
+    security:
+      - bearerAuth: []
+    produces:
+      - application/json
+
+    parameters:
+      - in: path
+        name: user_id
+        required: true
+        schema:
+          type: integer
+
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              name:
+                type: string
+                example: 'update name'
+              description:
+                type: string
+                example: 'update description'
+
+    responses:
+      200:
+        description: Success
+
+  delete:
+    description: Delete a user habit
+    tags:
+      - Habit
+    security:
+      - bearerAuth: []
+    produces:
+      - application/json
+
+    parameters:
+      - in: path
+        name: user_id
+        required: true
+        schema:
+          type: integer
+
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+
+    responses:
+      200:
+        description: Success

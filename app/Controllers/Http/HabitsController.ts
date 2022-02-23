@@ -17,7 +17,7 @@ export default class HabitsController {
       .paginate(filters.page || 1, filters.limit || 10)
   }
 
-  public async show({ params, bouncer, request }: HttpContextContract) {
+  public async show({ params, bouncer }: HttpContextContract) {
     const user = await User.findOrFail(params.user_id)
 
     await bouncer.with('HabitPolicy').authorize('view', user)
