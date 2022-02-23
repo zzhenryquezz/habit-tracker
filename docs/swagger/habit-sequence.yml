@@ -1,0 +1,141 @@
+/api/habits/{habit_id}/sequences:
+  get:
+    description: Return a list sequences of a habit
+    tags:
+      - Habit sequence
+    security:
+      - bearerAuth: []
+    produces:
+      - application/json
+
+    parameters:
+      - in: path
+        name: habit_id
+        required: true
+        schema:
+          type: integer
+
+      - in: query
+        name: page
+        schema:
+          type: integer
+
+      - in: query
+        name: limit
+        schema:
+          type: integer
+
+    responses:
+      200:
+        description: Success
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                meta:
+                  $ref: '#/components/schemas/PaginationMeta'
+                data:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/HabitSequence'
+  post:
+    description: Create a new sequence of a habit
+    tags:
+      - Habit sequence
+    security:
+      - bearerAuth: []
+    produces:
+      - application/json
+
+    parameters:
+      - in: path
+        name: habit_id
+        required: true
+        schema:
+          type: integer
+
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              date:
+                type: string
+                format: date
+              done:
+                type: boolean
+
+    responses:
+      200:
+        description: Success
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HabitSequence'
+
+/api/habits/{habit_id}/sequences/{id}:
+  patch:
+    description: Update a sequence of a habit
+    tags:
+      - Habit sequence
+    security:
+      - bearerAuth: []
+    produces:
+      - application/json
+
+    parameters:
+      - in: path
+        name: habit_id
+        required: true
+        schema:
+          type: integer
+
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+
+    requestBody:
+      required: true
+      content:
+        application/json:
+          schema:
+            properties:
+              date:
+                type: string
+                format: date
+              done:
+                type: boolean
+
+    responses:
+      200:
+        description: Success
+
+  delete:
+    description: Delete a sequence of a habit
+    tags:
+      - Habit sequence
+    security:
+      - bearerAuth: []
+    produces:
+      - application/json
+
+    parameters:
+      - in: path
+        name: habit_id
+        required: true
+        schema:
+          type: integer
+
+      - in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+
+    responses:
+      200:
+        description: Success

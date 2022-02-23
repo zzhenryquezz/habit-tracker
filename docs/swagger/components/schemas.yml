@@ -23,6 +23,19 @@ components:
         description:
           type: string
 
+    HabitSequence:
+      type: object
+      properties:
+        id:
+          type: number
+        habit_id:
+          type: number
+        date:
+          type: string
+          format: date
+        done:
+          type: boolean
+
     PaginationMeta:
       type: object
       properties:
