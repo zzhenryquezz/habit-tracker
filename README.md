@@ -47,7 +47,7 @@ PG_DB_NAME=habit-tracker
 npm run dev
 ```
 
-If everything goes right you can already go to [http://localhost:3333](http://localhost:3333) and check the documentation and requests of the API.
+If everything goes right you can already go to [http://localhost:3333/api/docs](http://localhost:3333/api/docs) and check the documentation and requests of the API.
 
 ## Admin user
 

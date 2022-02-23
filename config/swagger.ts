@@ -1,8 +1,8 @@
 import { SwaggerConfig } from '@ioc:Adonis/Addons/Swagger'
 
 const swaggerConfig: SwaggerConfig = {
-  uiEnabled: false, //disable or enable swaggerUi route
-  uiUrl: '/docs', // url path to swaggerUI
+  uiEnabled: true, //disable or enable swaggerUi route
+  uiUrl: '/api/docs', // url path to swaggerUI
   specEnabled: true, //disable or enable swagger.json route
   specUrl: '/swagger.json',
 
