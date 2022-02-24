@@ -1,8 +1,8 @@
 {
   "compilerOptions": {
-    "target": "ESNext",
+    "target": "esnext",
     "useDefineForClassFields": true,
-    "module": "ESNext",
+    "module": "esnext",
     "lib": ["ESNext", "DOM"],
     "moduleResolution": "Node",
     "strict": true,
@@ -14,5 +14,5 @@
     "noUnusedParameters": true,
     "noImplicitReturns": true
   },
-  "include": ["./*.ts"]
+  "include": ["./**/*.ts", "./**/*.vue"]
 }

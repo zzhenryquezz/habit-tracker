@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [vue()],
     resolve: {
-      // alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
+      alias: [{ find: '@layouts', replacement: path.resolve(__dirname, 'layouts') }],
     },
     server: {
       proxy: {
