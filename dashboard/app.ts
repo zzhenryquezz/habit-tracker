@@ -1,7 +1,6 @@
 import App from './App.vue'
 import { createApp as baseCreateApp } from 'vue'
 import { createRouter } from './router'
-import boot from './plugins/vue-wind'
 
 export function createApp() {
   const app = baseCreateApp(App)
@@ -9,7 +8,13 @@ export function createApp() {
 
   app.use(router)
 
-  boot(app)
+  const plugins = import.meta.globEager('./plugins/*.ts')
+
+  Object.values(plugins).forEach((plugin) => {
+    const boot = plugin.default || plugin
+
+    boot(app, router)
+  })
 
   return app
 }
