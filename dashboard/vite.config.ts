@@ -8,6 +8,9 @@ export default defineConfig(({ mode }) => {
   const proxyUrl = API_PROXY_URL || 'http://localhost:3333'
 
   return {
+    test: {
+      environment: 'happy-dom',
+    },
     build: {
       outDir: path.resolve(__dirname, '..', './public'),
     },
