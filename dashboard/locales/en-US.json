@@ -1,0 +1,8 @@
+{
+  "email": "E-mail",
+  "password": "Password",
+  "typePassword": "Type password...",
+  "notHaveAccount": "Don't have an account?",
+  "signUp": "Sign up",
+  "fieldRequired": "This field is required"
+}
