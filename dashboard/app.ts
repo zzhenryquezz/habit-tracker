@@ -1,6 +1,13 @@
 import App from './App.vue'
 import { createApp as baseCreateApp } from 'vue'
 import { createRouter } from './router'
+import { createServer } from './mirage'
+
+const { DEV, VITE_USE_PROXY } = import.meta.env
+
+if (DEV && !VITE_USE_PROXY) {
+  createServer()
+}
 
 export function createApp() {
   const app = baseCreateApp(App)

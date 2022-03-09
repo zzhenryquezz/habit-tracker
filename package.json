@@ -27,6 +27,7 @@
     "get-port": "^5.1.1",
     "husky": "^7.0.0",
     "japa": "^4.0.0",
+    "miragejs": "^0.1.43",
     "pino-pretty": "^7.5.1",
     "prettier": "^2.5.1",
     "supertest": "^6.2.2",

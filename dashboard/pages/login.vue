@@ -18,12 +18,26 @@ const user = ref({
 const rules = {
   required: (value: string) => (value.length > 0 ? true : tm.t('fieldRequired')),
 }
+
+async function login() {
+  const request = await fetch('/api/auth/login', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(user.value),
+  })
+
+  const json = await request.json()
+
+  alert(json.message)
+}
 </script>
 
 <template>
   <div class="flex h-full bg-gray-200 w-full items-center justify-center">
     <w-card max-width="md" min-height="[400px]" class="px-10 py-10">
-      <w-form class="items-center flex flex-wrap">
+      <w-form class="items-center flex flex-wrap" @submit="login">
         <div class="w-full text-center mb-10">
           <h1 class="text-4xl font-bold text-gray-500">Habit Tracker</h1>
         </div>
