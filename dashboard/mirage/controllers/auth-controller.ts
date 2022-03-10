@@ -1,9 +1,17 @@
-import { Request, Response } from 'miragejs'
+import { Response } from 'miragejs'
 import { Schema } from '../types'
 
 class AuthController {
-  public login(schema: Schema, request: Request) {
-    return new Response(200, {}, { message: 'Login success' })
+  public login() {
+    const token = Math.random().toString(36).substring(2, 15)
+
+    return new Response(200, {}, { token })
+  }
+
+  public whoIAm(schema: Schema) {
+    const user = schema.create('user')
+
+    return new Response(200, {}, user)
   }
 }
 
