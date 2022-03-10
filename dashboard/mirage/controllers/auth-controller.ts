@@ -11,7 +11,7 @@ class AuthController {
   public whoIAm(schema: Schema) {
     const user = schema.create('user')
 
-    return new Response(200, {}, user)
+    return new Response(200, {}, user.attrs)
   }
 }
 
