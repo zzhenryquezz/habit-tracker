@@ -20,7 +20,7 @@ const rules = {
 }
 
 async function login() {
-  const request = await fetch('/api/auth/login', {
+  await fetch('/api/auth/login', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -28,15 +28,15 @@ async function login() {
     body: JSON.stringify(user.value),
   })
 
-  const json = await request.json()
+  // const json = await request.json()
 
-  alert(json.message)
+  // alert(json.message)
 }
 </script>
 
 <template>
   <div class="flex h-full bg-gray-200 w-full items-center justify-center">
-    <w-card max-width="md" min-height="[400px]" class="px-10 py-10">
+    <w-card max-width="md" min-height="[400px]" class="px-10 py-10 border">
       <w-form class="items-center flex flex-wrap" @submit="login">
         <div class="w-full text-center mb-10">
           <h1 class="text-4xl font-bold text-gray-500">Habit Tracker</h1>
@@ -47,6 +47,7 @@ async function login() {
             v-model="user.email"
             :rules="[rules.required]"
             :label="$t('email')"
+            id="e-mail"
             type="e-mail"
             placeholder="jonathan@jojo.com"
           />
@@ -58,12 +59,13 @@ async function login() {
             :rules="[rules.required]"
             :label="$t('password')"
             :placeholder="$t('typePassword')"
+            id="password"
             type="password"
           />
         </div>
 
         <div class="w-full mb-10">
-          <w-btn type="submit" width="full" color="yellow-400" text-size="xl" class="uppercase">
+          <w-btn name="submit" width="full" color="yellow-400" text-size="xl" class="uppercase">
             Submit
           </w-btn>
         </div>
