@@ -6,16 +6,26 @@ import { renderWithPlugins } from '../tests/fixtures/render-with-plugins'
 import Login from './login.vue'
 
 import { createServer } from '../mirage'
+import { useMockRouter } from '../tests/fixtures/use-mock-router'
+import { Response } from 'miragejs'
 
 let server: ReturnType<typeof createServer>
+let router: ReturnType<typeof useMockRouter>
 
 beforeEach(() => {
+  router = useMockRouter()
+
+  vi.mock('vue-router', () => ({
+    useRouter: () => router,
+  }))
+
   server = createServer({
     environment: 'test',
   })
 })
 
 afterEach(() => {
+  vi.resetAllMocks()
   server.shutdown()
   cleanup()
 })
@@ -96,5 +106,31 @@ describe('login.vue', () => {
       email,
       password,
     })
+  })
+
+  it('should show error if request fail', async () => {
+    renderWithPlugins(Login)
+
+    server.post('/auth/login', () => new Response(400, {}, {}))
+
+    await userEvent.type(screen.getByLabelText(/e-mail/i), 'test@test.com')
+    await userEvent.type(screen.getByLabelText(/password/i), '123456')
+
+    await userEvent.click(screen.getByText(/submit/i))
+
+    await screen.findByText(/Login error/i)
+  })
+
+  it('should redirect to dashboard when login success', async () => {
+    renderWithPlugins(Login)
+
+    await userEvent.type(screen.getByLabelText(/e-mail/i), 'sucess@test.com')
+    await userEvent.type(screen.getByLabelText(/password/i), '123456')
+
+    await userEvent.click(screen.getByText(/submit/i))
+
+    await new Promise((resolve) => setTimeout(resolve, 100))
+
+    expect(router.push).toHaveBeenCalledWith('/')
   })
 })

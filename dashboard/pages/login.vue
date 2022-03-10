@@ -7,30 +7,32 @@ export default {
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+import { useStore } from '../stores'
 
 const tm = useI18n()
+
+const store = useStore()
+const router = useRouter()
 
 const user = ref({
   email: '',
   password: '',
 })
 
+const error = ref('')
+
 const rules = {
   required: (value: string) => (value.length > 0 ? true : tm.t('fieldRequired')),
 }
 
 async function login() {
-  await fetch('/api/auth/login', {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json',
-    },
-    body: JSON.stringify(user.value),
-  })
+  const { email, password } = user.value
 
-  // const json = await request.json()
-
-  // alert(json.message)
+  await store
+    .login(email, password)
+    .then(() => router.push('/'))
+    .catch(() => (error.value = tm.t('loginError')))
 }
 </script>
 
@@ -68,6 +70,8 @@ async function login() {
           <w-btn name="submit" width="full" color="yellow-400" text-size="xl" class="uppercase">
             Submit
           </w-btn>
+
+          <small class="block text-red-500 my-4 text-center" v-if="error">{{ error }}</small>
         </div>
 
         <div class="w-full text-center text-xs text-gray-500">
