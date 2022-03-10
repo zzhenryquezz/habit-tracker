@@ -9,7 +9,7 @@ export default defineConfig(({ mode }) => {
 
   return {
     test: {
-      environment: 'happy-dom',
+      environment: 'jsdom',
     },
     build: {
       outDir: path.resolve(__dirname, '..', './public'),
@@ -17,6 +17,7 @@ export default defineConfig(({ mode }) => {
     plugins: [vue()],
     resolve: {
       alias: [{ find: '@layouts', replacement: path.resolve(__dirname, 'layouts') }],
+      dedupe: ['vue'],
     },
     server: {
       proxy: {
