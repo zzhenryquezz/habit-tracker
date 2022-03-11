@@ -21,6 +21,7 @@ const user = ref({
 })
 
 const error = ref('')
+const loading = ref(false)
 
 const rules = {
   required: (value: string) => (value.length > 0 ? true : tm.t('fieldRequired')),
@@ -29,10 +30,13 @@ const rules = {
 async function login() {
   const { email, password } = user.value
 
+  loading.value = true
+
   await store
     .login(email, password)
     .then(() => router.push('/'))
     .catch(() => (error.value = tm.t('loginError')))
+    .finally(() => setTimeout(() => (loading.value = false), 800))
 }
 </script>
 
@@ -67,8 +71,15 @@ async function login() {
         </div>
 
         <div class="w-full mb-10">
-          <w-btn name="submit" width="full" color="yellow-400" text-size="xl" class="uppercase">
-            Submit
+          <w-btn
+            name="submit"
+            width="full"
+            color="yellow-400"
+            text-size="xl"
+            class="uppercase"
+            :disabled="loading"
+          >
+            {{ loading ? $t('loading') : $t('submit') }}
           </w-btn>
 
           <small class="block text-red-500 my-4 text-center" v-if="error">{{ error }}</small>

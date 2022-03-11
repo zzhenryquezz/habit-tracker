@@ -1,5 +1,5 @@
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
-import { screen, cleanup } from '@testing-library/vue'
+import { screen, cleanup, waitFor } from '@testing-library/vue'
 import userEvent from '@testing-library/user-event'
 
 import { renderWithPlugins } from '../tests/fixtures/render-with-plugins'
@@ -129,8 +129,23 @@ describe('login.vue', () => {
 
     await userEvent.click(screen.getByText(/submit/i))
 
-    await new Promise((resolve) => setTimeout(resolve, 100))
+    await waitFor(async () => {
+      expect(screen.queryByText(/Loading.../i)).toBeNull()
+    })
 
     expect(router.push).toHaveBeenCalledWith('/')
+  })
+
+  it('should disable button and show loading text when seeding request', async () => {
+    renderWithPlugins(Login)
+
+    expect(screen.getByText(/submit/i).getAttribute('disabled')).toBeNull()
+
+    await userEvent.type(screen.getByLabelText(/e-mail/i), 'sucess@test.com')
+    await userEvent.type(screen.getByLabelText(/password/i), '123456')
+
+    await userEvent.click(screen.getByText(/submit/i))
+
+    expect(screen.getByText(/Loading.../i).getAttribute('disabled')).not.toBeNull()
   })
 })

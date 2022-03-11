@@ -5,5 +5,7 @@
   "notHaveAccount": "Don't have an account?",
   "signUp": "Sign up",
   "fieldRequired": "This field is required",
-  "loginError": "Login error"
+  "loginError": "Login error",
+  "loading": "Loading...",
+  "submit": "Submit"
 }
