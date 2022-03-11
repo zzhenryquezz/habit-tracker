@@ -21,6 +21,9 @@ export const useStore = defineStore('main', {
         Authorization: `Bearer ${token}`,
       }
 
+      localStorage.removeItem('auth:token')
+      api.defaults.headers.common = {}
+
       return api
         .get('/auth/who-i-am', { headers })
         .then(({ data }) => {
@@ -30,6 +33,12 @@ export const useStore = defineStore('main', {
           return true
         })
         .catch(() => (this.user = null))
+    },
+    async isAuthenticated() {
+      if (this.user === null) {
+        await this.check()
+      }
+      return this.user !== null
     },
   },
 })
