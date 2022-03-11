@@ -40,5 +40,14 @@ export const useStore = defineStore('main', {
       }
       return this.user !== null
     },
+
+    async logout() {
+      this.user = null
+
+      await api.post('/auth/logout')
+
+      localStorage.removeItem('auth:token')
+      api.defaults.headers.common = {}
+    },
   },
 })

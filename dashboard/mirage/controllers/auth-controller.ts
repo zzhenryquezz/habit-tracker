@@ -18,6 +18,10 @@ class AuthController {
 
     return new Response(200, {}, user.attrs)
   }
+
+  public logout() {
+    return new Response(200)
+  }
 }
 
 export default new AuthController()

@@ -13,6 +13,8 @@ export function createServer({ environment = 'development' } = {}) {
 
       this.post('/auth/login', AuthController.login)
 
+      this.post('/auth/logout', AuthController.logout)
+
       this.get('/auth/who-i-am', AuthController.whoIAm)
     },
   })

@@ -7,5 +7,6 @@
   "fieldRequired": "This field is required",
   "loginError": "Login error",
   "loading": "Loading...",
-  "submit": "Submit"
+  "submit": "Submit",
+  "logout": "Logout"
 }
