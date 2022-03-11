@@ -16,7 +16,7 @@ export default defineConfig(({ mode }) => {
     },
     plugins: [vue()],
     resolve: {
-      alias: [{ find: '@layouts', replacement: path.resolve(__dirname, 'layouts') }],
+      alias: [{ find: '@', replacement: path.resolve(__dirname) }],
       dedupe: ['vue'],
     },
     server: {
