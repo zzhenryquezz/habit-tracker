@@ -69,10 +69,12 @@ describe('login.vue', () => {
     expect(auth).not.toHaveBeenCalled()
   })
 
-  it('should show error message when e-mail field is empty', async () => {
+  it('should show error messages when e-mail field is empty', async () => {
     renderWithPlugins(Login)
 
-    userEvent.click(screen.getByText(/submit/i))
+    await userEvent.type(screen.getByLabelText(/password/i), 'password')
+
+    await userEvent.click(screen.getByText(/submit/i))
 
     await screen.findByText(/This field is required/i, { selector: 'small' })
   })
