@@ -9,11 +9,13 @@ import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useStore } from '../stores'
+import { useRules } from '../composable/use-rules'
 
 const tm = useI18n()
 
 const store = useStore()
 const router = useRouter()
+const rules = useRules()
 
 const user = ref({
   email: '',
@@ -22,10 +24,6 @@ const user = ref({
 
 const error = ref('')
 const loading = ref(false)
-
-const rules = {
-  required: (value: string) => (value.length > 0 ? true : tm.t('fieldRequired')),
-}
 
 async function login() {
   const { email, password } = user.value
