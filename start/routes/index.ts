@@ -1,4 +1,5 @@
 import { listDirectoryFiles } from '@adonisjs/core/build/standalone'
+import Route from '@ioc:Adonis/Core/Route'
 import Application from '@ioc:Adonis/Core/Application'
 
 const files = listDirectoryFiles(__dirname, Application.appRoot, [
@@ -9,3 +10,5 @@ const files = listDirectoryFiles(__dirname, Application.appRoot, [
 files.forEach((file) => {
   require(Application.makePath(file))
 })
+
+Route.get('*', 'ClientController.show')
