@@ -13,7 +13,7 @@ builded with: [adonis-v5](https://adonisjs.com/) - [PostgresSQL](https://www.pos
 ### 1 - Clone the repository
 
 ```
-git clone https://github.com/htron-dev/habit-tracker-api.git
+git clone https://github.com/htron-dev/habit-tracker.git
 ```
 
 ### 2 - Install the dependencies
