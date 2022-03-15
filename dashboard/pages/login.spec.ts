@@ -48,6 +48,14 @@ describe('login.vue', () => {
     screen.getByText(/submit/i, { selector: 'button' })
   })
 
+  it('should display a text and link to sign-up page', () => {
+    renderWithPlugins(Login)
+
+    screen.getByText(/Don't have an account?/i)
+
+    screen.getByText(/Sign up/i, { selector: 'a' })
+  })
+
   it('should not make post request when fields are not filled', async () => {
     renderWithPlugins(Login)
 
