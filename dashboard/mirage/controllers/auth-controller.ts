@@ -22,6 +22,14 @@ class AuthController {
   public logout() {
     return new Response(200)
   }
+
+  public register(schema: Schema, request: Request) {
+    const user = JSON.parse(request.requestBody)
+
+    schema.create('user', user)
+
+    return new Response(200)
+  }
 }
 
 export default new AuthController()

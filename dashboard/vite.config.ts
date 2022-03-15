@@ -10,6 +10,7 @@ export default defineConfig(({ mode }) => {
   return {
     test: {
       environment: 'jsdom',
+      reporters: 'verbose',
     },
     build: {
       outDir: path.resolve(__dirname, '..', './public'),

@@ -1,12 +1,18 @@
 {
+  "name": "Name",
   "email": "E-mail",
   "password": "Password",
+  "passwordConfirmation": "Confirm password",
   "typePassword": "Type password...",
   "notHaveAccount": "Don't have an account?",
   "signUp": "Sign up",
+  "logout": "Logout",
+  "login": "Login",
   "fieldRequired": "This field is required",
   "loginError": "Login error",
   "loading": "Loading...",
   "submit": "Submit",
-  "logout": "Logout"
+  "typeYour": "Type your {0}...",
+  "alreadyHaveAccount": "Already have an account?",
+  "somethingWentWrong": "Something went wrong"
 }

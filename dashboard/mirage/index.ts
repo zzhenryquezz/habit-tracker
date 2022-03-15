@@ -11,6 +11,8 @@ export function createServer({ environment = 'development' } = {}) {
     routes() {
       this.namespace = 'api'
 
+      this.post('/auth/register', AuthController.register)
+
       this.post('/auth/login', AuthController.login)
 
       this.post('/auth/logout', AuthController.logout)

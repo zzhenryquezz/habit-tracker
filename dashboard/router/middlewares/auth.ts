@@ -10,12 +10,13 @@ interface Middleware {
 
 export default async function middleware({ to, next, store }: Middleware) {
   const isAuthenticated = await store.isAuthenticated()
+  const excludedPaths = ['/login', '/sign-up']
 
-  if (isAuthenticated && to.path === '/login') {
+  if (isAuthenticated && excludedPaths.includes(to.path)) {
     return next('/')
   }
 
-  if (!isAuthenticated && to.path !== '/login') {
+  if (!isAuthenticated && !excludedPaths.includes(to.path)) {
     return next('/login')
   }
 
