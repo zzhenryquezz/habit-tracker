@@ -6,26 +6,17 @@ import { renderWithPlugins } from '../tests/fixtures/render-with-plugins'
 import Login from './login.vue'
 
 import { createServer } from '../mirage'
-import { useMockRouter } from '../tests/fixtures/use-mock-router'
 import { Response } from 'miragejs'
 
 let server: ReturnType<typeof createServer>
-let router: ReturnType<typeof useMockRouter>
 
 beforeEach(() => {
-  router = useMockRouter()
-
-  vi.mock('vue-router', () => ({
-    useRouter: () => router,
-  }))
-
   server = createServer({
     environment: 'test',
   })
 })
 
 afterEach(() => {
-  vi.resetAllMocks()
   server.shutdown()
   cleanup()
 })
@@ -124,7 +115,9 @@ describe('login.vue', () => {
   })
 
   it('should redirect to dashboard when login success', async () => {
-    renderWithPlugins(Login)
+    const { router } = renderWithPlugins(Login)
+
+    const push = vi.spyOn(router, 'push')
 
     await userEvent.type(screen.getByLabelText(/e-mail/i), 'sucess@test.com')
     await userEvent.type(screen.getByLabelText(/password/i), '123456')
@@ -135,7 +128,7 @@ describe('login.vue', () => {
       expect(screen.queryByText(/Loading.../i)).toBeNull()
     })
 
-    expect(router.push).toHaveBeenCalledWith('/')
+    expect(push).toHaveBeenCalledWith('/')
   })
 
   it('should disable button and show loading text when seeding request', async () => {
