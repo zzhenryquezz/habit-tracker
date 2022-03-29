@@ -1,4 +1,7 @@
 import App from './App.vue'
+
+import './styles/index.css'
+
 import { createApp as baseCreateApp } from 'vue'
 import { createRouter } from './router'
 import authMiddleware from './router/middlewares/auth'

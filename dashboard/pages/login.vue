@@ -72,7 +72,7 @@ async function login() {
           <w-btn
             name="submit"
             width="full"
-            color="yellow-400"
+            color="primary"
             text-size="xl"
             class="uppercase"
             :disabled="loading"
@@ -85,7 +85,7 @@ async function login() {
 
         <div class="w-full text-center text-xs text-gray-500">
           {{ $t('notHaveAccount') }}
-          <router-link to="/sign-up" class="text-yellow-400 font-bold">
+          <router-link to="/sign-up" class="text-primary font-bold">
             {{ $t('signUp') }}
           </router-link>
         </div>

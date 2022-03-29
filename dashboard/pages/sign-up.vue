@@ -91,7 +91,7 @@ async function submit() {
           <w-btn
             name="submit"
             width="full"
-            color="yellow-400"
+            color="primary"
             text-size="xl"
             class="uppercase"
             type="submit"
@@ -105,7 +105,7 @@ async function submit() {
 
         <div class="w-full text-center text-xs text-gray-500">
           {{ $t('alreadyHaveAccount') }}
-          <router-link to="/login" class="text-yellow-400 font-bold">{{ $t('login') }}</router-link>
+          <router-link to="/login" class="text-primary font-bold">{{ $t('login') }}</router-link>
         </div>
       </w-form>
     </w-card>
