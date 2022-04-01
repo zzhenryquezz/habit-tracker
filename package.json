@@ -43,7 +43,7 @@
     "vitest": "^0.6.0",
     "vue": "^3.2.31",
     "vue-router": "^4.0.13",
-    "vue-wind": "^0.0.5-next",
+    "vue-wind": "^0.0.8-next",
     "youch": "^3.1.1",
     "youch-terminal": "^2.1.3"
   },

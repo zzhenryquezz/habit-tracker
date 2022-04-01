@@ -1,5 +1,7 @@
 import { App } from 'vue'
-import VWind from 'vue-wind'
+import { useVueWind } from 'vue-wind'
+
+const VWind = useVueWind()
 
 export default function boot(app: App) {
   app.use(VWind)
