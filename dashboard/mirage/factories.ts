@@ -5,6 +5,11 @@ const userFactory = Factory.extend({
   email: (i) => `user-${i}@test.com`,
 })
 
+const habitFactory = Factory.extend({
+  name: (i) => `Habit ${i}`,
+})
+
 export default {
   user: userFactory,
+  habit: habitFactory,
 }

@@ -1,15 +1,26 @@
-import { App } from 'vue'
+import { App, Component } from 'vue'
 
-export default function boot(app: App) {
-  const components = import.meta.globEager('../components/**/*.vue')
+export function getComponents() {
+  const components: Record<string, Component> = {}
+  const files = import.meta.globEager('../components/**/*.vue')
 
-  Object.entries(components).forEach(([key, component]) => {
+  Object.entries(files).forEach(([key, component]) => {
     const name = key
       .replace('../components/', '')
       .replace('.vue', '')
       .replace(/\b\w/g, (c) => c.toUpperCase())
       .replace('-', '')
 
-    app.component(name, component.default || component)
+    components[name] = component.default
+  })
+
+  return components
+}
+
+export default function boot(app: App) {
+  const components = getComponents()
+
+  Object.entries(components).forEach(([key, component]) => {
+    app.component(key, component)
   })
 }

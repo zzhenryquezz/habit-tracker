@@ -5,6 +5,7 @@ import { createPinia } from 'pinia'
 
 import { i18n } from '../../plugins/i18n'
 import { createRouter } from '@/router'
+import { getComponents } from '@/plugins/global-components'
 
 configure({
   getElementError: (message) => {
@@ -19,6 +20,7 @@ export function renderWithPlugins(component: Component) {
     global: {
       plugins: [i18n, useVueWind(), createPinia(), router],
       provide: [],
+      components: getComponents(),
     },
   })
 
