@@ -33,6 +33,10 @@ const displayDate = computed(() => {
   return `${start} - ${end}`
 })
 
+const isToday = computed(() => {
+  return moment(selectedDate.value).isSame(moment(), 'day')
+})
+
 const weekdays = computed(() =>
   moment.weekdays().map((weekday, index) => ({
     label: weekday,
@@ -79,13 +83,28 @@ async function toggleSequence(habit: Habit, day: string) {
 
   await setHabits()
 }
+
+function updateDate(value = 0) {
+  selectedDate.value = moment(selectedDate.value).add(value, 'days').toDate()
+}
 </script>
 
 <template>
   <div class="flex flex-wrap h-full w-full">
     <div class="w-full text-gray-500">
-      <div class="w-full h-16">
-        <h2 class="text-2xl font-bold">{{ displayDate }}</h2>
+      <div class="w-full h-16 flex text-2xl font-bold items-center">
+        <h2 class="mr-4 min-w-[200px]">{{ displayDate }}</h2>
+        <button class="mr-2 hover:bg-gray-50 p-2" @click="updateDate(-7)">
+          <fa-icon icon="chevron-left"></fa-icon>
+        </button>
+        <button
+          :disabled="isToday"
+          :class="isToday ? 'opacity-25' : ''"
+          class="mr-2 hover:bg-gray-50 p-2"
+          @click="updateDate(7)"
+        >
+          <fa-icon icon="chevron-right"></fa-icon>
+        </button>
       </div>
 
       <w-card class="border rounded drop-shadow flex flex-wrap relative max-h-[500px]">
@@ -117,7 +136,10 @@ async function toggleSequence(habit: Habit, day: string) {
         </div>
 
         <div class="flex w-full border-t" v-for="habit in habits" :key="habit.id">
-          <div class="w-4/12 items-center flex pl-10 font-bold text-lg">{{ habit.name }}</div>
+          <div class="w-4/12 items-center flex pl-10 font-bold text-lg">
+            <fa-icon icon="yin-yang" class="mr-5 text-2xl"></fa-icon>
+            {{ habit.name }}
+          </div>
           <div
             class="w-1/12 text-center h-16 items-center flex justify-center"
             v-for="day in weekdays"
