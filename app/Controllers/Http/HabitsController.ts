@@ -14,6 +14,7 @@ export default class HabitsController {
     return await user
       .related('habits')
       .query()
+      .preload('sequences')
       .paginate(filters.page || 1, filters.limit || 10)
   }
 

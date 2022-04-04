@@ -6,6 +6,8 @@ import { useApi } from '@/composable/axios'
 import { useStore } from '@/stores'
 
 interface HabitSequence {
+  id: number
+  habit_id: number
   date: string
   done: boolean
 }
@@ -55,28 +57,27 @@ function isChecked(habit: Habit, day: string) {
 
   return habit.sequences
     .filter((sequence) => sequence.done)
-    .some((sequence) => moment(sequence.date).isSame(day, 'day'))
+    .some((sequence) => sequence.date === day)
 }
 
-async function updateSequence(habit: Habit, day: string) {
-  await api
-    .patch(`/habits/${habit.id}/sequences`, {
-      date: day,
-      done: !isChecked(habit, day),
-    })
-    .then(() => {
-      const sequence = habit.sequences.find((sequence) => sequence.date === day)
+async function updateSequence(sequence: HabitSequence, done: boolean) {
+  await api.patch(`/habits/${sequence.habit_id}/sequences/${sequence.id}`, {
+    done,
+  })
+}
+async function createSequence(habit: Habit, day: string) {
+  await api.post(`/habits/${habit.id}/sequences`, {
+    date: day,
+    done: true,
+  })
+}
 
-      if (sequence) {
-        sequence.done = !sequence.done
-        return
-      }
+async function toggleSequence(habit: Habit, day: string) {
+  const sequence = habit.sequences.find((sequence) => sequence.date === day)
 
-      habit.sequences.push({
-        date: day,
-        done: true,
-      })
-    })
+  await (sequence ? updateSequence(sequence, !sequence.done) : createSequence(habit, day))
+
+  await setHabits()
 }
 </script>
 
@@ -87,7 +88,7 @@ async function updateSequence(habit: Habit, day: string) {
         <h2 class="text-2xl font-bold">{{ displayDate }}</h2>
       </div>
 
-      <w-card class="border rounded drop-shadow flex flex-wrap relative min-h-[500px]">
+      <w-card class="border rounded drop-shadow flex flex-wrap relative max-h-[500px]">
         <div
           v-if="loading"
           class="bg-white flex items-center justify-center animate-pulse absolute w-full h-full"
@@ -124,7 +125,7 @@ async function updateSequence(habit: Habit, day: string) {
           >
             <h-checkbox
               :model-value="isChecked(habit, day.date)"
-              @update:model-value="updateSequence(habit, day.date)"
+              @update:model-value="toggleSequence(habit, day.date)"
             />
           </div>
         </div>
