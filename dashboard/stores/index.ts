@@ -3,9 +3,15 @@ import { useApi } from '../composable/axios'
 
 const api = useApi()
 
+interface User {
+  id: number
+  name: string
+  email: string
+}
+
 export const useStore = defineStore('main', {
   state: () => ({
-    user: null,
+    user: null as null | User,
   }),
   actions: {
     async login(email: string, password: string) {

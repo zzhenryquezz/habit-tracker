@@ -14,5 +14,6 @@
   "submit": "Submit",
   "typeYour": "Type your {0}...",
   "alreadyHaveAccount": "Already have an account?",
-  "somethingWentWrong": "Something went wrong"
+  "somethingWentWrong": "Something went wrong",
+  "noHabits": "No habits"
 }

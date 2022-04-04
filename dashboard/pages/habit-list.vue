@@ -3,6 +3,7 @@ import { computed, ref } from 'vue'
 
 import { useMoment } from '@/composable/moment'
 import { useApi } from '@/composable/axios'
+import { useStore } from '@/stores'
 
 interface HabitSequence {
   date: string
@@ -18,6 +19,7 @@ interface Habit {
 
 const moment = useMoment()
 const api = useApi()
+const store = useStore()
 
 const selectedDate = ref(new Date())
 const habits = ref<Habit[]>([])
@@ -40,9 +42,9 @@ async function setHabits() {
   loading.value = true
 
   await api
-    .get('/habits')
-    .then((res) => {
-      habits.value = res.data
+    .get(`/users/${store.user?.id}/habits`)
+    .then(({ data }) => {
+      habits.value = data.data
     })
     .finally(() => setTimeout(() => (loading.value = false), 1000))
 }
@@ -74,8 +76,6 @@ async function updateSequence(habit: Habit, day: string) {
         date: day,
         done: true,
       })
-
-      // habits.value = habits.value.slice()
     })
 }
 </script>
@@ -93,6 +93,16 @@ async function updateSequence(habit: Habit, day: string) {
           class="bg-white flex items-center justify-center animate-pulse absolute w-full h-full"
         >
           {{ $t('loading') }}
+        </div>
+
+        <div
+          v-else-if="!habits.length"
+          class="flex items-center justify-center absolute w-full h-full"
+        >
+          <div class="text-center">
+            <h2 class="mb-4">{{ $t('noHabits') }}</h2>
+            <w-btn color="primary">add new</w-btn>
+          </div>
         </div>
 
         <div class="w-4/12"></div>
