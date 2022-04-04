@@ -6,14 +6,7 @@ import { createApp as baseCreateApp } from 'vue'
 import { createRouter } from './router'
 import authMiddleware from './router/middlewares/auth'
 
-import { createServer } from './mirage'
 import { useStore } from './stores'
-
-const { DEV, VITE_USE_PROXY } = import.meta.env
-
-if (DEV && !VITE_USE_PROXY) {
-  createServer()
-}
 
 export function createApp() {
   const app = baseCreateApp(App)

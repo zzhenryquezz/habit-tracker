@@ -19,6 +19,7 @@ const model = computed({
 
   <w-card
     :color="model ? 'primary' : 'teal-100'"
+    :class="model ? 'border-primary' : 'border-slate-200'"
     width="6"
     height="6"
     class="cursor-pointer border"

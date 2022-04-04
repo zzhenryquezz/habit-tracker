@@ -106,7 +106,7 @@ async function updateSequence(habit: Habit, day: string) {
         </div>
 
         <div class="flex w-full border-t" v-for="habit in habits" :key="habit.id">
-          <div class="w-4/12 items-center flex pl-10 font-bold">{{ habit.name }}</div>
+          <div class="w-4/12 items-center flex pl-10 font-bold text-lg">{{ habit.name }}</div>
           <div
             class="w-1/12 text-center h-16 items-center flex justify-center"
             v-for="day in weekdays"
