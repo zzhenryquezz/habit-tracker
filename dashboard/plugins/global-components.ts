@@ -9,7 +9,7 @@ export function getComponents() {
       .replace('../components/', '')
       .replace('.vue', '')
       .replace(/\b\w/g, (c) => c.toUpperCase())
-      .replace('-', '')
+      .replace(/-/g, '')
 
     components[name] = component.default
   })

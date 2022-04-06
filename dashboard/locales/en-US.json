@@ -15,5 +15,7 @@
   "typeYour": "Type your {0}...",
   "alreadyHaveAccount": "Already have an account?",
   "somethingWentWrong": "Something went wrong",
-  "noHabits": "No habits"
+  "noHabits": "No habits",
+  "add": "Add {0}",
+  "habit": "Habit"
 }

@@ -26,6 +26,7 @@ const store = useStore()
 const selectedDate = ref(new Date())
 const habits = ref<Habit[]>([])
 const loading = ref(false)
+const dialog = ref(false)
 
 const displayDate = computed(() => {
   const start = moment(selectedDate.value).startOf('week').format('D MMM')
@@ -90,6 +91,8 @@ function updateDate(value = 0) {
 </script>
 
 <template>
+  <h-add-habit-dialog v-model="dialog" @submit="setHabits" />
+
   <div class="flex flex-wrap h-full w-full">
     <div class="w-full text-gray-500">
       <div class="w-full h-16 flex text-2xl font-bold items-center">
@@ -105,6 +108,13 @@ function updateDate(value = 0) {
         >
           <fa-icon icon="chevron-right"></fa-icon>
         </button>
+        <div class="flex-1"></div>
+        <div>
+          <w-btn color="primary" @click="dialog = true">
+            {{ $t('add', ['habit']) }}
+            <fa-icon icon="plus" class="ml-2"></fa-icon>
+          </w-btn>
+        </div>
       </div>
 
       <w-card class="border rounded drop-shadow flex flex-wrap relative max-h-[500px]">
@@ -115,16 +125,6 @@ function updateDate(value = 0) {
           {{ $t('loading') }}
         </div>
 
-        <div
-          v-else-if="!habits.length"
-          class="flex items-center justify-center absolute w-full h-full"
-        >
-          <div class="text-center">
-            <h2 class="mb-4">{{ $t('noHabits') }}</h2>
-            <w-btn color="primary">add new</w-btn>
-          </div>
-        </div>
-
         <div class="w-4/12"></div>
 
         <div
@@ -133,6 +133,18 @@ function updateDate(value = 0) {
           :key="day.date"
         >
           {{ day.label }}
+        </div>
+
+        <div
+          v-if="!habits.length && !loading"
+          class="flex my-20 items-center justify-center w-full"
+        >
+          <div class="text-center">
+            <h2 class="mb-4">{{ $t('noHabits') }}</h2>
+            <w-btn color="primary" @click="dialog = true">
+              {{ $t('add', ['habit']) }}
+            </w-btn>
+          </div>
         </div>
 
         <div class="flex w-full border-t" v-for="habit in habits" :key="habit.id">
