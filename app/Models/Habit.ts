@@ -1,6 +1,7 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
+import { BaseModel, column, computed, HasMany, hasMany } from '@ioc:Adonis/Lucid/Orm'
 import HabitSequence from './HabitSequence'
+import moment from 'moment'
 
 export default class Habit extends BaseModel {
   @column({ isPrimary: true })
@@ -23,4 +24,9 @@ export default class Habit extends BaseModel {
 
   @hasMany(() => HabitSequence)
   public sequences: HasMany<typeof HabitSequence>
+
+  @computed({ serializeAs: 'sequences_needed' })
+  public get sequencesNeeded() {
+    return moment().diff(moment(this.createdAt.toISO()), 'days')
+  }
 }

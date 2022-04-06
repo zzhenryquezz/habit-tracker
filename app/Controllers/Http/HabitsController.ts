@@ -1,21 +1,27 @@
 import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import User from 'App/Models/User'
-import HabitIndexValidator from 'App/Validators/HabitIndexValidator'
 import HabitStoreValidator from 'App/Validators/HabitStoreValidator'
 
 export default class HabitsController {
-  public async index({ params, bouncer, request }: HttpContextContract) {
+  public async index({ params, bouncer }: HttpContextContract) {
     const user = await User.findOrFail(params.user_id)
-
-    const filters = await request.validate(HabitIndexValidator)
 
     await bouncer.with('HabitPolicy').authorize('view', user)
 
-    return await user
+    const data = await user
       .related('habits')
       .query()
       .preload('sequences')
-      .paginate(filters.page || 1, filters.limit || 10)
+      .withCount('sequences', (q) => q.where('done', true))
+
+    const habits = data.map((habit) => {
+      return {
+        ...habit.toJSON(),
+        done: habit.$extras.sequences_count,
+      }
+    })
+
+    return habits
   }
 
   public async show({ params, bouncer }: HttpContextContract) {
