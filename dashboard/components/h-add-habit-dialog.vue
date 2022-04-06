@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { useApi } from '@/composable/axios'
 import { useRules } from '@/composable/use-rules'
-import { useStore } from '@/stores'
+import { useHabitStore } from '@/stores/habits'
 import { computed, ref } from 'vue'
 
 const props = defineProps({
@@ -12,9 +11,7 @@ const props = defineProps({
 })
 
 const emit = defineEmits(['update:modelValue', 'submit'])
-
-const api = useApi()
-const store = useStore()
+const habitStore = useHabitStore()
 
 const model = computed({
   get: () => props.modelValue,
@@ -25,6 +22,7 @@ const habit = ref({
   name: '',
   description: '',
 })
+
 const loading = ref(false)
 
 const rules = useRules()
@@ -32,10 +30,12 @@ const rules = useRules()
 async function submit() {
   loading.value = true
 
-  await api.post(`/users/${store.user?.id}/habits`, habit.value).finally(() =>
+  await habitStore.addHabit(habit.value.name, habit.value.description).finally(() =>
     setTimeout(() => {
       emit('submit')
       loading.value = false
+      habit.value.name = ''
+      habit.value.description = ''
       model.value = false
     }, 800)
   )

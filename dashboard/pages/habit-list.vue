@@ -2,31 +2,15 @@
 import { computed, ref } from 'vue'
 
 import { useMoment } from '@/composable/moment'
-import { useApi } from '@/composable/axios'
-import { useStore } from '@/stores'
-
-interface HabitSequence {
-  id: number
-  habit_id: number
-  date: string
-  done: boolean
-}
-
-interface Habit {
-  id: number
-  name: string
-  description: string
-  sequences: HabitSequence[]
-}
+import { useHabitStore, Habit } from '@/stores/habits'
 
 const moment = useMoment()
-const api = useApi()
-const store = useStore()
+const habitStore = useHabitStore()
 
 const selectedDate = ref(new Date())
-const habits = ref<Habit[]>([])
 const loading = ref(false)
 const dialog = ref(false)
+const habits = computed(() => habitStore.habits)
 
 const displayDate = computed(() => {
   const start = moment(selectedDate.value).startOf('week').format('D MMM')
@@ -48,13 +32,9 @@ const weekdays = computed(() =>
 async function setHabits() {
   loading.value = true
 
-  await api
-    .get(`/users/${store.user?.id}/habits`)
-    .then(({ data }) => {
-      habits.value = data.data
-    })
-    .finally(() => setTimeout(() => (loading.value = false), 1000))
+  await habitStore.setHabits().finally(() => setTimeout(() => (loading.value = false), 1000))
 }
+
 setHabits()
 
 function isChecked(habit: Habit, day: string) {
@@ -65,22 +45,16 @@ function isChecked(habit: Habit, day: string) {
     .some((sequence) => sequence.date === day)
 }
 
-async function updateSequence(sequence: HabitSequence, done: boolean) {
-  await api.patch(`/habits/${sequence.habit_id}/sequences/${sequence.id}`, {
-    done,
-  })
-}
-async function createSequence(habit: Habit, day: string) {
-  await api.post(`/habits/${habit.id}/sequences`, {
-    date: day,
-    done: true,
-  })
-}
+async function toggleSequence(habit: Habit, date: string) {
+  const sequence = habit.sequences.find((sequence) => sequence.date === date)
 
-async function toggleSequence(habit: Habit, day: string) {
-  const sequence = habit.sequences.find((sequence) => sequence.date === day)
+  if (sequence) {
+    await habitStore.updateSequence(sequence, !sequence.done)
+  }
 
-  await (sequence ? updateSequence(sequence, !sequence.done) : createSequence(habit, day))
+  if (!sequence) {
+    await habitStore.addSequence(habit, { date, done: true })
+  }
 
   await setHabits()
 }
