@@ -40,7 +40,7 @@ function getSequencesLabel(habit: Habit) {
 }
 </script>
 <template>
-  <w-drawer layout width="[300px]" class="bg-white py-10 px-8">
+  <w-drawer layout width="[300px]" class="bg-white py-10 px-8 drop-shadow-sm max-h-screen">
     <div
       class="w-32 h-32 mb-5 mx-auto rounded-full bg-gray-200 drop-shadow flex justify-center items-center"
     >

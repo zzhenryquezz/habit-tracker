@@ -41,7 +41,7 @@
     "vite": "^2.9.1",
     "vue": "^3.2.31",
     "vue-router": "^4.0.14",
-    "vue-wind": "^0.0.10-next",
+    "vue-wind": "^0.0.11-next",
     "youch": "^3.1.1",
     "youch-terminal": "^2.1.3"
   },

@@ -70,7 +70,7 @@ function updateDate(value = 0) {
         </div>
       </div>
 
-      <w-card class="border rounded drop-shadow flex flex-wrap relative max-h-[500px]">
+      <w-card class="border rounded drop-shadow flex flex-wrap relative">
         <div
           v-if="loading"
           class="bg-white flex items-center justify-center animate-pulse absolute w-full h-full"
@@ -106,21 +106,23 @@ function updateDate(value = 0) {
           </div>
         </div>
 
-        <div class="flex w-full border-t" v-for="habit in habits" :key="habit.id">
-          <div class="w-4/12 items-center flex pl-10 font-bold text-lg">
-            <fa-icon icon="yin-yang" class="mr-5 text-2xl"></fa-icon>
-            {{ habit.name }}
-          </div>
-          <div
-            class="w-1/12 text-center h-16 items-center flex justify-center"
-            v-for="day in weekdays"
-            :key="day.date"
-          >
-            <h-checkbox
-              :model-value="isDayChecked(habit, day.date)"
-              @update:model-value="toggleDay(habit, day.date)"
-              :loading="isUpdating(habit, day.date)"
-            />
+        <div class="overflow-y-auto w-full max-h-[600px]">
+          <div class="flex w-full border-t" v-for="habit in habits" :key="habit.id">
+            <div class="w-4/12 items-center flex pl-10 font-bold text-lg">
+              <fa-icon icon="yin-yang" class="mr-5 text-2xl"></fa-icon>
+              {{ habit.name }}
+            </div>
+            <div
+              class="w-1/12 text-center h-16 items-center flex justify-center"
+              v-for="day in weekdays"
+              :key="day.date"
+            >
+              <h-checkbox
+                :model-value="isDayChecked(habit, day.date)"
+                @update:model-value="toggleDay(habit, day.date)"
+                :loading="isUpdating(habit, day.date)"
+              />
+            </div>
           </div>
         </div>
       </w-card>
