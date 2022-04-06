@@ -12,7 +12,7 @@ api.interceptors.response.use(
     const path = lodash.get(error, 'response.config.url')
 
     if (!whiteList.includes(path)) {
-      alert(lodash.get(error, 'response.data.message', 'Something went wrong'))
+      console.error(lodash.get(error, 'response.data.message', 'Something went wrong'))
     }
 
     return Promise.reject(error)

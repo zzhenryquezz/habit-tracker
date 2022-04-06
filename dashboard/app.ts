@@ -5,33 +5,40 @@ import './styles/index.css'
 import { createApp as baseCreateApp } from 'vue'
 import { createRouter } from './router'
 import authMiddleware from './router/middlewares/auth'
-
 import { useStore } from './stores'
 
-export function createApp() {
+export async function createApp() {
   const app = baseCreateApp(App)
   const router = createRouter()
 
-  app.use(router)
+  const plugins = [
+    './plugins/pinia.ts',
+    './plugins/i18n.ts',
+    './plugins/vue-wind.ts',
+    './plugins/icons.ts',
+    './plugins/global-components.ts',
+  ]
 
-  const plugins = import.meta.globEager('./plugins/*.ts')
+  await Promise.all(
+    plugins.map(async (filename) => {
+      const boot = (await import(/* @vite-ignore */ filename)).default
 
-  Object.values(plugins).forEach((plugin) => {
-    const boot = plugin.default || plugin
-
-    boot(app, router)
-  })
+      await boot(app, router)
+    })
+  )
 
   const store = useStore()
 
-  router.beforeEach((to, from, next) => {
-    return authMiddleware({
+  router.beforeEach((to, from, next) =>
+    authMiddleware({
       to,
       from,
       next,
       store,
     })
-  })
+  )
+
+  app.use(router)
 
   return app
 }
