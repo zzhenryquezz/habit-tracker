@@ -132,7 +132,13 @@ function updateDate(value = 0) {
           v-for="day in weekdays"
           :key="day.date"
         >
-          {{ day.label }}
+          <div class="hidden xl:block">
+            {{ day.label }}
+          </div>
+
+          <div class="xl:hidden">
+            {{ day.label.charAt(0) }}
+          </div>
         </div>
 
         <div
