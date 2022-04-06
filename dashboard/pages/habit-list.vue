@@ -2,7 +2,8 @@
 import { computed, ref } from 'vue'
 
 import { useMoment } from '@/composable/moment'
-import { useHabitStore, Habit } from '@/stores/habits'
+import { isDayChecked, toggleDay, isUpdating } from '@/composable/habits'
+import { useHabitStore } from '@/stores/habits'
 
 const moment = useMoment()
 const habitStore = useHabitStore()
@@ -36,28 +37,6 @@ async function setHabits() {
 }
 
 setHabits()
-
-function isChecked(habit: Habit, day: string) {
-  if (!habit.sequences) return false
-
-  return habit.sequences
-    .filter((sequence) => sequence.done)
-    .some((sequence) => sequence.date === day)
-}
-
-async function toggleSequence(habit: Habit, date: string) {
-  const sequence = habit.sequences.find((sequence) => sequence.date === date)
-
-  if (sequence) {
-    await habitStore.updateSequence(sequence, !sequence.done)
-  }
-
-  if (!sequence) {
-    await habitStore.addSequence(habit, { date, done: true })
-  }
-
-  await setHabits()
-}
 
 function updateDate(value = 0) {
   selectedDate.value = moment(selectedDate.value).add(value, 'days').toDate()
@@ -138,8 +117,9 @@ function updateDate(value = 0) {
             :key="day.date"
           >
             <h-checkbox
-              :model-value="isChecked(habit, day.date)"
-              @update:model-value="toggleSequence(habit, day.date)"
+              :model-value="isDayChecked(habit, day.date)"
+              @update:model-value="toggleDay(habit, day.date)"
+              :loading="isUpdating(habit, day.date)"
             />
           </div>
         </div>

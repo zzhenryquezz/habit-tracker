@@ -8,6 +8,7 @@ module.exports = {
     files: [
       resolve(__dirname, 'index.html'),
       resolve(__dirname, './pages/*.{vue,js,ts,jsx,tsx}'),
+      resolve(__dirname, './components/*.{vue,js,ts,jsx,tsx}'),
       resolve(__dirname, './layouts/*.{vue,js,ts,jsx,tsx}'),
       resolve(__dirname, '..', 'node_modules/vue-wind/dist/index.es.js'),
     ],

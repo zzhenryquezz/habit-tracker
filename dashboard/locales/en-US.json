@@ -1,5 +1,6 @@
 {
   "name": "Name",
+  "description": "Description",
   "email": "E-mail",
   "password": "Password",
   "passwordConfirmation": "Confirm password",
@@ -17,5 +18,9 @@
   "somethingWentWrong": "Something went wrong",
   "noHabits": "No habits",
   "add": "Add {0}",
-  "habit": "Habit"
+  "habit": "Habit",
+  "habitList": "Habit list",
+  "sidebarQuote": "The water pot is filled Drop by Drop",
+  "today": "Today",
+  "habitSequence": "Habit sequence | Habit sequences"
 }

@@ -14,6 +14,7 @@ export interface Habit {
   name: string
   description: string
   sequences: HabitSequence[]
+  sequences_needed: number
 }
 
 const api = useApi()
@@ -22,11 +23,12 @@ const mainStore = useStore()
 export const useHabitStore = defineStore('habits', {
   state: () => ({
     habits: [] as Habit[],
+    updatingDays: [] as string[],
   }),
   actions: {
     async setHabits() {
       await api.get(`/users/${mainStore.user?.id}/habits`).then(({ data }) => {
-        this.habits = data.data
+        this.habits = data
       })
     },
     async addHabit(name: string, description: string) {

@@ -6,6 +6,18 @@ const props = defineProps({
     type: Boolean,
     default: false,
   },
+  size: {
+    type: String,
+    default: '6',
+  },
+  spinSize: {
+    type: String,
+    default: '4',
+  },
+  loading: {
+    type: Boolean,
+    default: false,
+  },
 })
 const emit = defineEmits(['update:modelValue'])
 
@@ -20,9 +32,11 @@ const model = computed({
     <w-card
       :color="model ? 'primary' : 'teal-100'"
       :class="model ? 'border-primary' : 'border-slate-200'"
-      width="6"
-      height="6"
-      class="cursor-pointer border"
-    />
+      :width="props.size"
+      :height="props.size"
+      class="cursor-pointer border flex items-center justify-center transition-colors"
+    >
+      <h-spin v-if="loading" :color="model ? 'white' : 'primary'" :size="spinSize" />
+    </w-card>
   </a>
 </template>
