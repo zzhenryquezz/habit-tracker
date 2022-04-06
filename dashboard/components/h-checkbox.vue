@@ -16,13 +16,13 @@ const model = computed({
 </script>
 <template>
   <input v-model="model" type="checkbox" class="hidden" />
-
-  <w-card
-    :color="model ? 'primary' : 'teal-100'"
-    :class="model ? 'border-primary' : 'border-slate-200'"
-    width="6"
-    height="6"
-    class="cursor-pointer border"
-    @click="model = !model"
-  />
+  <a @click="model = !model">
+    <w-card
+      :color="model ? 'primary' : 'teal-100'"
+      :class="model ? 'border-primary' : 'border-slate-200'"
+      width="6"
+      height="6"
+      class="cursor-pointer border"
+    />
+  </a>
 </template>
