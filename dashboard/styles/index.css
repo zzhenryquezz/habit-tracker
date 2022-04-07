@@ -8,3 +8,23 @@ body {
   font-family: 'Roboto', sans-serif;
   color: theme('colors.gray.500');
 }
+
+table {
+  @apply w-full border border-slate-200;
+  @apply max-h-[500px] overflow-auto;
+}
+
+table th,
+table td {
+  @apply px-5 py-4;
+  @apply text-center;
+  @apply text-sm;
+}
+
+table th {
+  @apply bg-gray-200;
+}
+
+table td {
+  @apply border-b border-gray-200;
+}

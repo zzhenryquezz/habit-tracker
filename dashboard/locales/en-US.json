@@ -22,5 +22,15 @@
   "habitList": "Habit list",
   "sidebarQuote": "The water pot is filled Drop by Drop",
   "today": "Today",
-  "habitSequence": "Habit sequence | Habit sequences"
+  "habitSequence": "Habit sequence | Habit sequences",
+  "sequences": "Sequences",
+  "delete": "Delete",
+  "edit": "Edit",
+  "sequencesList": "List of sequences",
+  "addSequence": "Add sequence",
+  "done": "Done",
+  "date": "Date",
+  "options": "Options",
+  "yes": "Yes",
+  "no": "No"
 }

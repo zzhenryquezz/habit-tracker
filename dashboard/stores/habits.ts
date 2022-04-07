@@ -39,6 +39,16 @@ export const useHabitStore = defineStore('habits', {
 
       await this.setHabits()
     },
+    async findHabitById(id: number) {
+      if (!this.habits.length) {
+        await this.setHabits()
+      }
+
+      return this.habits.find((habit) => habit.id === id)
+    },
+    async deleteHabit(id: Habit['id']) {
+      await api.delete(`/users/${mainStore.user?.id}/habits/${id}`)
+    },
     async updateSequence(sequence: HabitSequence, done: boolean) {
       await api.patch(`/habits/${sequence.habit_id}/sequences/${sequence.id}`, {
         done,
@@ -46,6 +56,10 @@ export const useHabitStore = defineStore('habits', {
     },
     async addSequence(habit: Habit, sequence: Partial<HabitSequence>) {
       await api.post(`/habits/${habit.id}/sequences`, sequence)
+    },
+    async deleteSequence(habitId: Habit['id'], sequenceId: HabitSequence['id']) {
+      await api.delete(`/habits/${habitId}/sequences/${sequenceId}`)
+      await this.setHabits()
     },
   },
 })

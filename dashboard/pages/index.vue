@@ -3,7 +3,7 @@ import { useRouter } from 'vue-router'
 
 const router = useRouter()
 
-router.push('/habit-list')
+router.push('/habits')
 </script>
 <template>
   <div>Home</div>

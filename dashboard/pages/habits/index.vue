@@ -108,10 +108,13 @@ function updateDate(value = 0) {
 
         <div class="overflow-y-auto w-full max-h-[600px]">
           <div class="flex w-full border-t" v-for="habit in habits" :key="habit.id">
-            <div class="w-4/12 items-center flex pl-10 font-bold text-lg">
+            <router-link
+              :to="`/habits/${habit.id}`"
+              class="w-4/12 items-center flex pl-10 font-bold text-lg hover:bg-teal-500/20 transition-all"
+            >
               <fa-icon icon="yin-yang" class="mr-5 text-2xl"></fa-icon>
               {{ habit.name }}
-            </div>
+            </router-link>
             <div
               class="w-1/12 text-center h-16 items-center flex justify-center"
               v-for="day in weekdays"
