@@ -38,13 +38,24 @@ function getSequencesLabel(habit: Habit) {
 
   return `${habit.name} - (${sequences.length} / ${habit.sequences_needed})`
 }
+
+function logout() {
+  return store.logout().finally(() => router.push('/login'))
+}
 </script>
 <template>
   <w-drawer layout width="[300px]" class="bg-white py-10 px-8 drop-shadow-sm max-h-screen">
     <div
-      class="w-32 h-32 mb-5 mx-auto rounded-full bg-gray-200 drop-shadow flex justify-center items-center"
+      class="relative w-32 h-32 mb-5 mx-auto rounded-full bg-gray-200 drop-shadow flex justify-center items-center"
     >
-      <fa-icon icon="user" class="text-4xl" />
+      <div
+        class="absolute opacity-0 hover:opacity-100 transition-opacity cursor-pointer z-10 rounded-full text-white flex items-center justify-center inset-0 bg-teal-500/50"
+        @click="logout"
+      >
+        {{ $t('logout') }}
+      </div>
+
+      <fa-icon icon="user" class="text-4xl z-0" />
     </div>
 
     <div class="w-full text-center mb-10">
