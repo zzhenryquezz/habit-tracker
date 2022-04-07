@@ -30,7 +30,7 @@ const todayLabel = computed(() => {
 })
 
 function toHabitList() {
-  router.push('/habit-list')
+  router.push('/habits')
 }
 
 function getSequencesLabel(habit: Habit) {
@@ -73,10 +73,10 @@ function logout() {
       <div class="w-full flex items-center mb-5" v-for="habit in habits" :key="habit.id">
         <h-checkbox
           :model-value="isDayChecked(habit, today)"
-          @update:model-value="toggleDay(habit, today)"
+          :loading="isUpdating(habit, today)"
           size="5"
           spin-size="3"
-          :loading="isUpdating(habit, today)"
+          @update:model-value="toggleDay(habit, today)"
         />
         <h4 class="ml-5">{{ habit.name }}</h4>
       </div>
