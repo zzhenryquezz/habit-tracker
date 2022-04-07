@@ -18,7 +18,7 @@ test.group('HabitsController (int)', (group) => {
 
     const { body } = await client.get(`/api/users/${user.id}/habits`)
 
-    assert.equal(body.data.length, 5)
+    assert.equal(body.length, 5)
   })
 
   test('[index] should normal user not get habits of other user', async () => {
@@ -36,7 +36,7 @@ test.group('HabitsController (int)', (group) => {
 
     const { body } = await client.get(`/api/users/${id}/habits`).expect(200)
 
-    assert.equal(body.data.length, 5)
+    assert.equal(body.length, 5)
   })
 
   test('[show] should admin user get a habit of other user', async (assert) => {
