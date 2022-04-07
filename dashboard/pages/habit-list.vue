@@ -121,6 +121,7 @@ function updateDate(value = 0) {
                 :model-value="isDayChecked(habit, day.date)"
                 @update:model-value="toggleDay(habit, day.date)"
                 :loading="isUpdating(habit, day.date)"
+                :disabled="moment(day.date).isAfter(moment())"
               />
             </div>
           </div>
