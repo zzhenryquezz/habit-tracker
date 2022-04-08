@@ -16,6 +16,9 @@ export default class Habit extends BaseModel {
   @column()
   public description: string
 
+  @column.date()
+  public startDate: DateTime
+
   @column.dateTime({ autoCreate: true, serializeAs: null })
   public createdAt: DateTime
 
@@ -27,6 +30,6 @@ export default class Habit extends BaseModel {
 
   @computed({ serializeAs: 'sequences_needed' })
   public get sequencesNeeded() {
-    return moment().diff(moment(this.createdAt.toISO()), 'days')
+    return moment().diff(moment(this.startDate?.toISO()), 'days') + 1
   }
 }

@@ -10,6 +10,7 @@ export default class Habits extends BaseSchema {
       table.integer('user_id').notNullable().references('users.id').onDelete('CASCADE')
       table.string('name').notNullable()
       table.string('description').notNullable().defaultTo('')
+      table.date('start_date').notNullable().defaultTo(this.now())
 
       table.timestamp('created_at', { useTz: true })
       table.timestamp('updated_at', { useTz: true })

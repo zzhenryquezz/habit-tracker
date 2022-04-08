@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, watch } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
@@ -24,11 +24,13 @@ const habit = ref<Habit>({
   id: 0,
   name: '',
   description: '',
+  start_date: '',
   sequences_needed: 0,
   sequences: [],
 })
 
 const sequenceDialog = ref(false)
+const editDialog = ref(false)
 
 async function setHabit() {
   const data = await habitsStore.findHabitById(Number(props.id))
@@ -47,7 +49,9 @@ async function setHabit() {
   })
 }
 
-setHabit()
+watch(() => props.id, setHabit, {
+  immediate: true,
+})
 
 function getSequencesLabel() {
   const sequences = habit.value.sequences.filter((s) => s.done)
@@ -77,6 +81,7 @@ async function deleteSequence(id: number) {
 </script>
 <template>
   <h-add-sequence-dialog :habit="habit" v-model="sequenceDialog" @submit="setHabit" />
+  <h-habit-dialog :habit="habit" v-model="editDialog" @submit="setHabit" />
 
   <div class="w-full h-full flex">
     <div class="w-4/12 px-5">
@@ -87,10 +92,15 @@ async function deleteSequence(id: number) {
         <h1 class="text-3xl mb-2 font-bold text-center w-full">
           {{ habit?.name }}
         </h1>
-        <h2 class="text-sm text-center w-full mb-2">
+        <h2 class="text-sm w-full mb-2">
           {{ habit?.description }}
         </h2>
-        <h3 class="text-lg text-center w-full mb-8">
+
+        <h3 class="text-base w-full mb-2">
+          {{ `${$t('startDate')}: ${habit.start_date}` }}
+        </h3>
+
+        <h3 class="text-base w-full mb-8">
           {{ getSequencesLabel() }}
         </h3>
 
@@ -98,7 +108,7 @@ async function deleteSequence(id: number) {
           <w-btn color="primary" class="mr-4" @click="deleteHabit">
             {{ $t('delete') }}
           </w-btn>
-          <w-btn color="primary">
+          <w-btn color="primary" @click="editDialog = true">
             {{ $t('edit') }}
           </w-btn>
         </div>

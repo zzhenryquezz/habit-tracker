@@ -6,6 +6,9 @@ export default class HabitStoreValidator {
   public schema = schema.create({
     name: schema.string(),
     description: schema.string.optional(),
+    start_date: schema.date.optional({
+      format: 'yyyy-MM-dd',
+    }),
   })
 
   public messages = {}

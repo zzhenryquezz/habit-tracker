@@ -13,6 +13,7 @@ export interface Habit {
   id: number
   name: string
   description: string
+  start_date: string
   sequences: HabitSequence[]
   sequences_needed: number
 }
@@ -31,20 +32,22 @@ export const useHabitStore = defineStore('habits', {
         this.habits = data
       })
     },
-    async addHabit(name: string, description: string) {
-      await api.post(`/users/${mainStore.user?.id}/habits`, {
-        name,
-        description,
-      })
-
-      await this.setHabits()
-    },
     async findHabitById(id: number) {
       if (!this.habits.length) {
         await this.setHabits()
       }
 
       return this.habits.find((habit) => habit.id === id)
+    },
+    async addHabit(data: Partial<Habit>) {
+      await api.post(`/users/${mainStore.user?.id}/habits`, data)
+
+      await this.setHabits()
+    },
+    async updateHabit(id: number, data: Partial<Habit>) {
+      await api.patch(`/users/${mainStore.user?.id}/habits/${id}`, data)
+
+      await this.setHabits()
     },
     async deleteHabit(id: Habit['id']) {
       await api.delete(`/users/${mainStore.user?.id}/habits/${id}`)

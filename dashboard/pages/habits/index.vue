@@ -44,11 +44,11 @@ function updateDate(value = 0) {
 </script>
 
 <template>
-  <h-add-habit-dialog v-model="dialog" @submit="setHabits" />
+  <h-habit-dialog v-model="dialog" @submit="setHabits" />
 
   <div class="flex flex-wrap h-full w-full">
     <div class="w-full text-gray-500">
-      <div class="w-full h-16 flex text-2xl font-bold items-center">
+      <div class="w-full h-16 flex text-2xl font-bold items-center mb-10">
         <h2 class="mr-4 min-w-[200px]">{{ displayDate }}</h2>
         <button class="mr-2 hover:bg-gray-50 p-2" @click="updateDate(-7)">
           <fa-icon icon="chevron-left"></fa-icon>
@@ -85,7 +85,7 @@ function updateDate(value = 0) {
           v-for="day in weekdays"
           :key="day.date"
         >
-          <div class="hidden xl:block">
+          <div class="hidden xl:block break-all">
             {{ day.label }}
           </div>
 
@@ -107,14 +107,16 @@ function updateDate(value = 0) {
         </div>
 
         <div class="overflow-y-auto w-full max-h-[600px]">
-          <div class="flex w-full border-t" v-for="habit in habits" :key="habit.id">
-            <router-link
-              :to="`/habits/${habit.id}`"
-              class="w-4/12 items-center flex pl-10 font-bold text-lg hover:bg-teal-500/20 transition-all"
-            >
+          <router-link
+            :to="`/habits/${habit.id}`"
+            v-for="habit in habits"
+            :key="habit.id"
+            class="flex w-full border-t hover:bg-gray-500/10 transition-all"
+          >
+            <div class="w-4/12 items-center flex pl-10 font-bold text-lg">
               <fa-icon icon="yin-yang" class="mr-5 text-2xl"></fa-icon>
               {{ habit.name }}
-            </router-link>
+            </div>
             <div
               class="w-1/12 text-center h-16 items-center flex justify-center"
               v-for="day in weekdays"
@@ -122,12 +124,15 @@ function updateDate(value = 0) {
             >
               <h-checkbox
                 :model-value="isDayChecked(habit, day.date)"
-                @update:model-value="toggleDay(habit, day.date)"
                 :loading="isUpdating(habit, day.date)"
-                :disabled="moment(day.date).isAfter(moment())"
+                :disabled="
+                  moment(day.date).isAfter(moment()) ||
+                  moment(day.date).isBefore(moment(habit.start_date))
+                "
+                @update:model-value="toggleDay(habit, day.date)"
               />
             </div>
-          </div>
+          </router-link>
         </div>
       </w-card>
     </div>

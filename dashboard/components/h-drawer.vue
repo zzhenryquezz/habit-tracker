@@ -78,7 +78,9 @@ function logout() {
           spin-size="3"
           @update:model-value="toggleDay(habit, today)"
         />
-        <h4 class="ml-5">{{ habit.name }}</h4>
+        <router-link :to="`/habits/${habit.id}`" class="hover:text-teal-500">
+          <h4 class="ml-5">{{ habit.name }}</h4>
+        </router-link>
       </div>
     </div>
 

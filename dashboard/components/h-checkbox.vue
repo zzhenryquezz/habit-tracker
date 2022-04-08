@@ -51,8 +51,8 @@ function onClick() {
 }
 </script>
 <template>
-  <input v-model="model" type="checkbox" class="hidden" />
-  <a @click="onClick" :class="disabled ? 'cursor-not-allowed' : 'cursor-pointer'">
+  <a @click.stop="onClick" href="#" :class="disabled ? 'cursor-not-allowed' : 'cursor-pointer'">
+    <input v-model="model" type="checkbox" class="hidden" />
     <w-card
       :color="color"
       :class="model ? 'border-primary' : 'border-slate-200'"
