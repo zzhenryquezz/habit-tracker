@@ -32,5 +32,7 @@
   "date": "Date",
   "options": "Options",
   "yes": "Yes",
-  "no": "No"
+  "no": "No",
+  "noSequences": "No sequences",
+  "invalidDate": "Invalid date"
 }

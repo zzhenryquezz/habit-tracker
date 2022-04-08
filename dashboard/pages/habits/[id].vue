@@ -28,6 +28,8 @@ const habit = ref<Habit>({
   sequences: [],
 })
 
+const sequenceDialog = ref(false)
+
 async function setHabit() {
   const data = await habitsStore.findHabitById(Number(props.id))
 
@@ -74,6 +76,8 @@ async function deleteSequence(id: number) {
 }
 </script>
 <template>
+  <h-add-sequence-dialog :habit="habit" v-model="sequenceDialog" @submit="setHabit" />
+
   <div class="w-full h-full flex">
     <div class="w-4/12 px-5">
       <w-card class="flex flex-wrap py-10 px-8 border border-slate-100 drop-shadow-sm">
@@ -107,7 +111,9 @@ async function deleteSequence(id: number) {
             {{ $t('sequencesList') }}
           </h2>
 
-          <w-btn color="primary" class="max-w-[150px]">{{ $t('addSequence') }}</w-btn>
+          <w-btn color="primary" class="max-w-[150px]" @click="sequenceDialog = true">{{
+            $t('addSequence')
+          }}</w-btn>
         </div>
 
         <div class="w-full">
@@ -120,7 +126,12 @@ async function deleteSequence(id: number) {
               </tr>
             </thead>
             <tbody>
-              <tr v-for="sequence in habit.sequences.sort()">
+              <tr v-if="!habit.sequences.length">
+                <td colspan="3" class="text-center">
+                  {{ $t('noSequences') }}
+                </td>
+              </tr>
+              <tr v-for="sequence in habit.sequences">
                 <td>
                   <div class="flex justify-center">
                     <h-checkbox
@@ -132,6 +143,7 @@ async function deleteSequence(id: number) {
                     />
                   </div>
                 </td>
+
                 <td>{{ sequence.date }}</td>
 
                 <td>
