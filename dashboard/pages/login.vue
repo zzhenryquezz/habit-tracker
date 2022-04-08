@@ -40,7 +40,7 @@ async function login() {
 
 <template>
   <div class="flex h-full bg-gray-200 w-full items-center justify-center">
-    <w-card max-width="[500px]" min-height="[400px]" class="p-12 border">
+    <w-card max-width="[500px]" min-height="[400px]" class="p-12 border h-full md:h-auto">
       <w-form class="items-center flex flex-wrap" @submit="login">
         <div class="w-full text-center mb-9">
           <h1 class="text-4xl font-bold text-gray-500">Habit Tracker</h1>

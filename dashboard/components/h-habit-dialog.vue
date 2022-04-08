@@ -73,7 +73,7 @@ async function submit() {
 </script>
 <template>
   <w-dialog v-model="model">
-    <w-card width="screen" max-width="md" class="p-4 rounded">
+    <w-card width="screen" max-width="md" class="p-10 rounded">
       <h2 class="text-2xl font-bold mb-4">{{ $t('add', ['habit']) }}</h2>
       <w-form @submit="submit" v-if="model">
         <div class="mb-4">

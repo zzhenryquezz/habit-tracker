@@ -14,9 +14,7 @@ const tm = useI18n()
 const moment = useMoment()
 
 const user = computed(() => store.user)
-
 const today = computed(() => moment().format('YYYY-MM-DD'))
-
 const habits = computed(() => habitStore.habits)
 
 const todayDoneHabits = computed(() =>
@@ -29,8 +27,9 @@ const todayLabel = computed(() => {
   return `${tm.t('today')} (${todayDoneHabits.value.length}/${habits.value.length})`
 })
 
-function toHabitList() {
-  router.push('/habits')
+async function toHabitList() {
+  await router.push('/habits')
+  store.drawer = false
 }
 
 function getSequencesLabel(habit: Habit) {
@@ -44,7 +43,11 @@ function logout() {
 }
 </script>
 <template>
-  <w-drawer layout width="[300px]" class="bg-white py-10 px-8 drop-shadow-sm max-h-screen">
+  <w-drawer
+    layout
+    width="full"
+    class="bg-white lg:w-[300px] py-10 px-8 drop-shadow-sm max-h-screen"
+  >
     <div
       class="relative w-32 h-32 mb-5 mx-auto rounded-full bg-gray-200 drop-shadow flex justify-center items-center"
     >

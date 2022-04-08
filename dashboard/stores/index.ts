@@ -12,6 +12,7 @@ interface User {
 export const useStore = defineStore('main', {
   state: () => ({
     user: null as null | User,
+    drawer: true,
   }),
   actions: {
     async login(email: string, password: string) {
