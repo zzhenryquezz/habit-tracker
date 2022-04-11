@@ -6,26 +6,20 @@ import { createApp as baseCreateApp } from 'vue'
 import { createRouter } from './router'
 import authMiddleware from './router/middlewares/auth'
 import { useStore } from './stores'
+import { createPinia } from 'pinia'
 
 export async function createApp() {
   const app = baseCreateApp(App)
   const router = createRouter()
+  const pinia = createPinia()
 
-  const plugins = [
-    './plugins/pinia.ts',
-    './plugins/i18n.ts',
-    './plugins/vue-wind.ts',
-    './plugins/icons.ts',
-    './plugins/global-components.ts',
-  ]
+  app.use(pinia)
 
-  await Promise.all(
-    plugins.map(async (filename) => {
-      const boot = (await import(/* @vite-ignore */ filename)).default
+  const files = import.meta.glob('./plugins/*.ts')
 
-      await boot(app, router)
-    })
-  )
+  const plugins = await Promise.all(Object.values(files).map((r) => r()))
+
+  plugins.map((p) => p.default).forEach((boot) => boot(app))
 
   const store = useStore()
 

@@ -2,7 +2,7 @@ import { HttpContextContract } from '@ioc:Adonis/Core/HttpContext'
 import UnAuthorizedException from 'App/Exceptions/UnAuthorizedException'
 
 export default class Admin {
-  public async handle({ auth, response }: HttpContextContract, next: () => Promise<void>) {
+  public async handle({ auth }: HttpContextContract, next: () => Promise<void>) {
     const message = 'Not enough permissions'
     const status = 403
     const errorCode = 'E_UNAUTHORIZED'

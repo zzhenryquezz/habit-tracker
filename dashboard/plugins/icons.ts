@@ -7,5 +7,5 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 library.add(fas)
 
 export default function boot(app: App) {
-  app.component('fa-icon', FontAwesomeIcon)
+  app.component('FaIcon', FontAwesomeIcon)
 }

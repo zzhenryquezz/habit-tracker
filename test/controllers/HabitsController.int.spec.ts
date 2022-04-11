@@ -77,7 +77,7 @@ test.group('HabitsController (int)', (group) => {
     assert.equal(body.name, 'test')
   })
 
-  test('[store] should normal user not create a habit of other user', async (assert) => {
+  test('[store] should normal user not create a habit of other user', async () => {
     await client.login({ isAdmin: false })
 
     const { id } = await UserFactory.create()

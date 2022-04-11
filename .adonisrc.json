@@ -25,5 +25,12 @@
     "@adonisjs/bouncer",
     "adonis5-swagger"
   ],
-  "aceProviders": ["@adonisjs/repl"]
+  "aceProviders": ["@adonisjs/repl"],
+
+  "metaFiles": [
+    {
+      "pattern": "public/**",
+      "reloadServer": false
+    }
+  ]
 }

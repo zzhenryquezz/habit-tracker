@@ -25,7 +25,7 @@ test.group('HabitSequencesController (int)', (group) => {
     assert.equal(body.data.length, 5)
   })
 
-  test('[index] should normal user not get habit-sequences of other user', async (assert) => {
+  test('[index] should normal user not get habit-sequences of other user', async () => {
     await client.login({ isAdmin: false })
 
     const user = await UserFactory.with('habits', 1, (h) => h.with('sequences', 5)).create()
@@ -116,7 +116,7 @@ test.group('HabitSequencesController (int)', (group) => {
     assert.isFalse(sequence.done)
   })
 
-  test('[update] should normal user not update habit-sequences of other user', async (assert) => {
+  test('[update] should normal user not update habit-sequences of other user', async () => {
     await client.login({ isAdmin: false })
 
     const user = await UserFactory.with('habits', 1).create()

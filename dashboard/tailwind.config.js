@@ -11,7 +11,6 @@ module.exports = {
       resolve(__dirname, './pages/**/*.{vue,js,ts,jsx,tsx}'),
       resolve(__dirname, './components/*.{vue,js,ts,jsx,tsx}'),
       resolve(__dirname, './layouts/*.{vue,js,ts,jsx,tsx}'),
-      resolve(__dirname, '..', 'node_modules/vue-wind/dist/index.es.js'),
     ],
     transform: {
       vue: (content) => {
